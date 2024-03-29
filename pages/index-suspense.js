@@ -1,18 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 
 // Set this to true for SSR, false for CSR
-const ENABLE_SSR = true; // Change this flag before deployment as needed
+const ENABLE_SSR = false; // Change this flag before deployment as needed
 
 // Dynamic imports with conditional SSR/CSR
 const Component = dynamic(() => import('./component'), {
 	ssr: ENABLE_SSR,
-	prefetch: false
+	prefetch: false,
+	loading: () => <p>Loading...</p> // Loading component specific to this dynamic import
 });
 
 const Image = dynamic(() => import('./image'), {
 	ssr: ENABLE_SSR,
-	prefetch: false
+	prefetch: false,
+	loading: () => <p>Loading...</p> // Loading component specific to this dynamic import
 });
 
 export default function Home() {
@@ -38,19 +40,21 @@ export default function Home() {
 	];
 
 	return (
-		<div>
-			<div style={{ textAlign: 'center' }}>
-				<h1 style={{ fontSize: '48px', fontWeight: 'bold' }}>Lazy Loading Experiment</h1>
-				<h4 style={{ fontSize: '16px' }}>Developed By: Cagan Sevencan</h4>
+		<Suspense fallback={<div>Loading Components...</div>}>
+			<div>
+				<div style={{ textAlign: 'center' }}>
+					<h1 style={{ fontSize: '48px', fontWeight: 'bold' }}>Rendering Patterns Experiment</h1>
+					<h4 style={{ fontSize: '16px' }}>Developed By: Cagan Sevencan</h4>
+				</div>
+				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+					{elements.map((_, index) => (
+						<div key={index} style={{ display: 'flex', justifyContent: 'center' }}>
+							<Component component={components[0]} />
+							<Image imageUrl={'https://picsum.photos/500'} />
+						</div>
+					))}
+				</div>
 			</div>
-			<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-				{elements.map((_, index) => (
-					<div key={index} style={{ display: 'flex', justifyContent: 'center' }}>
-						<Component component={components[0]} />
-						<Image imageUrl={'https://picsum.photos/500'} />
-					</div>
-				))}
-			</div>
-		</div>
+		</Suspense>
 	);
 }
