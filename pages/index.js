@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 
 // Set this to true for SSR, false for CSR
-const ENABLE_SSR = true; // Change this flag before deployment as needed
+const ENABLE_SSR = false; // Change this flag before deployment as needed
 
 // Dynamic imports with conditional SSR/CSR
 const Component = dynamic(() => import('./component'), {
@@ -16,6 +16,24 @@ const Image = dynamic(() => import('./image'), {
 });
 
 export default function Home() {
+	const [toggleStatus, setToggleStatus] = useState(false);
+	const [imageUrls, setImageUrls] = useState(
+		Array.from({ length: 20 }, () => 'https://picsum.photos/750')
+	);
+	const [isLoading, setIsLoading] = useState(true);
+	const [loadedCount, setLoadedCount] = useState(0);
+
+	const buttonStyle = {
+		padding: '15px 30px',
+		fontSize: '18px',
+		backgroundColor: toggleStatus ? '#4CAF50' : '#008CBA', // Green when on, blue when off
+		color: 'white',
+		border: 'none',
+		borderRadius: '5px',
+		cursor: 'pointer',
+		transition: 'background-color 0.3s, transform 0.2s'
+	};
+
 	useEffect(() => {
 		const startLoad = performance.now();
 		return () => {
@@ -26,8 +44,28 @@ export default function Home() {
 		};
 	}, []);
 
+	const handleButtonClick = () => {
+		setToggleStatus(!toggleStatus);
+		setIsLoading(true);
+
+		// Dynamically update image URLs
+		const newImageUrl = `https://picsum.photos/750?random=${Math.random()}`;
+		setImageUrls(Array.from({ length: 20 }, () => newImageUrl));
+	};
+
+	const handleImageLoad = () => {
+		// Check if all images have loaded
+		setLoadedCount(prevCount => prevCount + 1);
+	};
+
+	useEffect(() => {
+		if (loadedCount === imageUrls.length) {
+			setIsLoading(false); // Re-enable the button
+			setLoadedCount(0); // Reset the loaded count for the next button click
+		}
+	}, [loadedCount, imageUrls.length]);
+
 	console.log('SSR:', ENABLE_SSR);
-	const elements = Array.from({ length: 20 });
 
 	const components = [
 		{
@@ -38,16 +76,33 @@ export default function Home() {
 	];
 
 	return (
-		<div>
-			<div style={{ textAlign: 'center' }}>
-				<h1 style={{ fontSize: '48px', fontWeight: 'bold' }}>Lazy Loading Experiment</h1>
-				<h4 style={{ fontSize: '16px' }}>Developed By: Cagan Sevencan</h4>
+		<div style={{ backgroundColor: '#F0F2F5', minHeight: '100vh', padding: '20px' }}>
+			<div style={{ textAlign: 'center', marginBottom: '40px' }}>
+				<h1 style={{ fontSize: '48px', fontWeight: 'bold', color: '#333' }}>
+					Rendering Patterns Experiment
+				</h1>
+				<h4 style={{ fontSize: '16px', color: '#555' }}>Developed By: Cagan Sevencan</h4>
 			</div>
-			<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-				{elements.map((_, index) => (
-					<div key={index} style={{ display: 'flex', justifyContent: 'center' }}>
+			<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+				<button
+					onClick={handleButtonClick}
+					disabled={isLoading}
+					style={buttonStyle}
+					onMouseOver={e => {
+						e.target.style.transform = 'scale(1.05)';
+					}}
+					onMouseOut={e => {
+						e.target.style.transform = 'scale(1)';
+					}}
+				>
+					{toggleStatus ? 'Toggled On' : 'Toggle Off'}
+				</button>
+
+				{/* <Image imageUrl={'https://picsum.photos/200'} size={200} /> */}
+				{imageUrls.map((url, index) => (
+					<div key={index} style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
 						<Component component={components[0]} />
-						<Image imageUrl={'https://picsum.photos/500'} />
+						<Image imageUrl={url} size={750} onLoad={handleImageLoad} />
 					</div>
 				))}
 			</div>

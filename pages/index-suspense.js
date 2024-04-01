@@ -18,6 +18,9 @@ const Image = dynamic(() => import('./image'), {
 });
 
 export default function Home() {
+	// const [imageUrls, setImageUrls] = useState(
+	// 	Array.from({ length: 20 }, (_, index) => `https://picsum.photos/seed/${index + 1}/1000`)
+	// );
 	useEffect(() => {
 		const startLoad = performance.now();
 		return () => {
