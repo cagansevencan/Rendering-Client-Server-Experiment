@@ -1,0 +1,100 @@
+/* Component.module.css */
+.component {
+    width: 100%;
+    max-width: 500px; 
+    height: 100%;
+    max-height: 500px;
+    background: #FFF;
+    color: #333;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.component h2 {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 10px
+}
+
+.component p {
+    overflow: auto;
+    text-overflow: ellipsis;
+    margin-bottom: 10px;
+}
+
+.imageComponent {
+    width: 100%;
+    max-width: 500px; 
+    height: 100%;
+    background: #E0E0E0;
+    color: #333;
+    margin: 10px;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    object-fit: cover;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.header h1 {
+    font-size: 48px;
+    font-weight: bold;
+    color: #333;
+}
+
+.header h4 {
+    font-size: 16px;
+    color: #555;
+
+}
+
+.toggleButton {
+    padding: 15px 30px;
+    font-size: 18px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.contentCreator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.toggleButton:hover {
+    transform: scale(1.1);
+}
+
+
+@media (max-width: 600px) {
+    .component {
+        max-height: 300px;
+        padding: 10px;
+        margin: 0;
+    }
+
+    .component h2 {
+        padding-left: 8px;
+    }
+
+    .component p {
+        padding: 8px;
+    }
+}

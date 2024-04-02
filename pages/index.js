@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import styles from '../styles/Main.module.css';
 
 // Set this to true for SSR, false for CSR
-const ENABLE_SSR = false; // Change this flag before deployment as needed
+const ENABLE_SSR = true; // Change this flag before deployment as needed
 
 // Dynamic imports with conditional SSR/CSR
 const Component = dynamic(() => import('./component'), {
@@ -24,14 +25,7 @@ export default function Home() {
 	const [loadedCount, setLoadedCount] = useState(0);
 
 	const buttonStyle = {
-		padding: '15px 30px',
-		fontSize: '18px',
-		backgroundColor: toggleStatus ? '#4CAF50' : '#008CBA', // Green when on, blue when off
-		color: 'white',
-		border: 'none',
-		borderRadius: '5px',
-		cursor: 'pointer',
-		transition: 'background-color 0.3s, transform 0.2s'
+		backgroundColor: toggleStatus ? '#4CAF50' : '#008CBA'
 	};
 
 	useEffect(() => {
@@ -76,33 +70,43 @@ export default function Home() {
 	];
 
 	return (
-		<div style={{ backgroundColor: '#F0F2F5', minHeight: '100vh', padding: '20px' }}>
-			<div style={{ textAlign: 'center', marginBottom: '40px' }}>
-				<h1 style={{ fontSize: '48px', fontWeight: 'bold', color: '#333' }}>
-					Rendering Patterns Experiment
-				</h1>
-				<h4 style={{ fontSize: '16px', color: '#555' }}>Developed By: Cagan Sevencan</h4>
+		<div
+			style={{
+				backgroundColor: '#F0F2F5',
+				minHeight: '100vh',
+				padding: '20px',
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'center'
+			}}
+		>
+			<div className={styles.header}>
+				<h1>Rendering Patterns Experiment</h1>
+				<h4>Developed By: Cagan Sevencan</h4>
 			</div>
-			<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+			<div
+				style={{
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+					gap: '20px',
+					'@media (maxWidth: 600px)': {
+						flexDirection: 'column'
+					}
+				}}
+			>
 				<button
 					onClick={handleButtonClick}
 					disabled={isLoading}
 					style={buttonStyle}
-					onMouseOver={e => {
-						e.target.style.transform = 'scale(1.05)';
-					}}
-					onMouseOut={e => {
-						e.target.style.transform = 'scale(1)';
-					}}
+					className={styles.toggleButton}
 				>
 					{toggleStatus ? 'Toggled On' : 'Toggle Off'}
 				</button>
-
-				{/* <Image imageUrl={'https://picsum.photos/200'} size={200} /> */}
 				{imageUrls.map((url, index) => (
-					<div key={index} style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
-						<Component component={components[0]} />
+					<div key={index} className={styles.contentCreator}>
 						<Image imageUrl={url} size={750} onLoad={handleImageLoad} />
+						<Component component={components[0]} />
 					</div>
 				))}
 			</div>

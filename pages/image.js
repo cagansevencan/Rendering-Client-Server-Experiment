@@ -1,17 +1,8 @@
-import React from 'react';
+import styles from '../styles/Main.module.css';
 
 const Image = ({ onLoad, imageUrl, size }) => {
-	const containerStyle = {
-		width: `${size}px`,
-		height: `${size}px`,
-		backgroundColor: '#E0E0E0',
-		padding: '20px',
-		display: 'flex',
-		justifyContent: 'center',
-		alignItems: 'center',
-		boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-		borderRadius: '10px',
-		margin: '10px'
+	const dynamicStyle = {
+		maxWidth: `${size}px`
 	};
 
 	const imageStyle = {
@@ -21,7 +12,7 @@ const Image = ({ onLoad, imageUrl, size }) => {
 	};
 
 	return (
-		<div style={containerStyle}>
+		<div className={styles.imageComponent} style={dynamicStyle}>
 			<img src={imageUrl} alt='Dynamic Sized Image Loaded' onLoad={onLoad} style={imageStyle} />
 		</div>
 	);
