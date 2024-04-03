@@ -1,6 +1,6 @@
 import styles from '../styles/Main.module.css';
 
-function Component({ component }) {
+function TextComponent({ component }) {
 	return (
 		<div className={styles.component}>
 			<h2>{component.title}</h2>
@@ -9,4 +9,4 @@ function Component({ component }) {
 	);
 }
 
-export default Component;
+export default TextComponent;

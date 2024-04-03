@@ -1,4 +1,3 @@
-/* Component.module.css */
 .component {
     width: 100%;
     max-width: 500px; 
@@ -29,8 +28,7 @@
 .imageComponent {
     width: 100%;
     max-width: 500px; 
-    height: 100%;
-    background: #E0E0E0;
+    background: #F0F0F0;
     color: #333;
     margin: 10px;
     padding: 10px;
@@ -41,6 +39,17 @@
     display: flex;
     flex-direction: column;
     object-fit: cover;
+    position: relative;
+    padding-top: 100%;
+}
+
+.imageComponent img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
 }
 
 .header {
@@ -49,7 +58,6 @@
 }
 
 .header h1 {
-    font-size: 48px;
     font-weight: bold;
     color: #333;
 }
@@ -57,7 +65,7 @@
 .header h4 {
     font-size: 16px;
     color: #555;
-
+    margin: 0;
 }
 
 .toggleButton {
@@ -88,6 +96,7 @@
         max-height: 300px;
         padding: 10px;
         margin: 0;
+        font-size: 90%;
     }
 
     .component h2 {

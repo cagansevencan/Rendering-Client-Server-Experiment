@@ -3,10 +3,10 @@ import dynamic from 'next/dynamic';
 import styles from '../styles/Main.module.css';
 
 // Set this to true for SSR, false for CSR
-const ENABLE_SSR = true; // Change this flag before deployment as needed
+const ENABLE_SSR = false; // Change this flag before deployment as needed
 
 // Dynamic imports with conditional SSR/CSR
-const Component = dynamic(() => import('./component'), {
+const Component = dynamic(() => import('./textcomponent'), {
 	ssr: ENABLE_SSR,
 	prefetch: false
 });
@@ -28,15 +28,15 @@ export default function Home() {
 		backgroundColor: toggleStatus ? '#4CAF50' : '#008CBA'
 	};
 
-	useEffect(() => {
-		const startLoad = performance.now();
-		return () => {
-			const endLoad = performance.now();
-			const loadTime = endLoad - startLoad;
-			console.log('Load Time:', loadTime, 'ms');
-			console.log('Load Time:', loadTime.toFixed(2) / 1000, 's');
-		};
-	}, []);
+	// useEffect(() => {
+	// 	const startLoad = performance.now();
+	// 	return () => {
+	// 		const endLoad = performance.now();
+	// 		const loadTime = endLoad - startLoad;
+	// 		console.log('Load Time:', loadTime, 'ms');
+	// 		console.log('Load Time:', loadTime.toFixed(2) / 1000, 's');
+	// 	};
+	// }, []);
 
 	const handleButtonClick = () => {
 		setToggleStatus(!toggleStatus);

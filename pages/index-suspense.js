@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 const ENABLE_SSR = false; // Change this flag before deployment as needed
 
 // Dynamic imports with conditional SSR/CSR
-const Component = dynamic(() => import('./component'), {
+const Component = dynamic(() => import('./textcomponent'), {
 	ssr: ENABLE_SSR,
 	prefetch: false,
 	loading: () => <p>Loading...</p> // Loading component specific to this dynamic import
