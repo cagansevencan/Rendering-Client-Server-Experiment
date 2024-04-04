@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import styles from '../styles/Main.module.css';
 
 // Set this to true for SSR, false for CSR
-const ENABLE_SSR = false; // Change this flag before deployment as needed
+const ENABLE_SSR = true; // Change this flag before deployment as needed
 
 // Dynamic imports with conditional SSR/CSR
 const Component = dynamic(() => import('./textcomponent'), {
@@ -28,23 +28,21 @@ export default function Home() {
 		backgroundColor: toggleStatus ? '#4CAF50' : '#008CBA'
 	};
 
-	// useEffect(() => {
-	// 	const startLoad = performance.now();
-	// 	return () => {
-	// 		const endLoad = performance.now();
-	// 		const loadTime = endLoad - startLoad;
-	// 		console.log('Load Time:', loadTime, 'ms');
-	// 		console.log('Load Time:', loadTime.toFixed(2) / 1000, 's');
-	// 	};
-	// }, []);
-
 	const handleButtonClick = () => {
 		setToggleStatus(!toggleStatus);
 		setIsLoading(true);
 
-		// Dynamically update image URLs
 		const newImageUrl = `https://picsum.photos/750?random=${Math.random()}`;
-		setImageUrls(Array.from({ length: 20 }, () => newImageUrl));
+		const newImageUrls = Array.from({ length: 20 }, () => newImageUrl);
+
+		setImageUrls(newImageUrls);
+
+		// Testing 20 different images
+		// const newImageUrls = Array.from(
+		// 	{ length: 20 },
+		// 	() => `https://picsum.photos/750?random=${Math.random()}`
+		// );
+		// setImageUrls(newImageUrls);
 	};
 
 	const handleImageLoad = () => {
